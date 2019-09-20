@@ -2,8 +2,9 @@ from pychord import Chord
 from pychord.constants import VAL_NOTE_DICT
 import itertools
 
-chords = ['G', 'C', 'D', 'Am', 'Em', 'F', 'A','Dm', 'F#m']
-secondary_chords = ['E', 'Bm']
+#chords = ['G', 'C', 'D', 'Am', 'Em', 'F', 'A','Dm', 'F#m']
+chords = ['A', 'Am', 'C', 'D', 'Em', 'F', 'G']
+secondary_chords = []
 
 num_str = 3
 max_fingers = 4
@@ -19,7 +20,7 @@ for chord in chords:
 
 def way_len(way):
     pos = [w for w in way if w]
-    return len(pos), not pos or max(max(pos)-min(pos),1), max(way)
+    return len(pos), not pos or max(max(pos)-min(pos),1), max(way), -(max_fret+1 if not pos else min(pos))
 
 def find_all(chord, strings):
     chord = comps(chord)
@@ -61,6 +62,7 @@ for i in range(12):
                 tuning_max_fingers = 0
                 tuning_max_diff = 0
                 tuning_max_fret = 0
+                tuning_min_fret = max_fret+1
                 zero = 0
                 one = 0
                 two = 0
@@ -73,16 +75,21 @@ for i in range(12):
                 two_far_chords = []
                 three_chords = []
                 other_chords = []
+                tab = {}
                 for chord in chords:
                     #print(chord, Chord(chord).components(), comps(chord))
                     best = find_min(chord,strings)
                     if not best:
                         have = False
                         break
-                    fingers, diff, fret = best[0][1]
+                    tab[chord] = [way[0] for way in best]
+                    if len(tab[chord])==1:
+                        tab[chord] = tab[chord][0]
+                    fingers, diff, hi_fret, neg_lo_fret = best[0][1]
                     tuning_max_fingers = max(tuning_max_fingers, fingers)
                     tuning_max_diff = max(tuning_max_diff, diff)
-                    tuning_max_fret = max(tuning_max_fret, fret)
+                    tuning_max_fret = max(tuning_max_fret, hi_fret)
+                    tuning_min_fret = min(tuning_min_fret, -neg_lo_fret)
                     if fingers == 0:
                         zero += 1
                         zero_chords.append(chord)
@@ -107,8 +114,11 @@ for i in range(12):
                     best = find_min(chord, strings)
                     if not best:
                         continue
+                    tab[chord] = [way[0] for way in best]
+                    if len(tab[chord])==1:
+                        tab[chord] = tab[chord][0]
                     sec_count += 1
-                    fingers, diff, fret = best[0][1]
+                    fingers, diff, hi_fret, neg_lo_fret = best[0][1]
                     if fingers == 0:
                         sec_score += 5
                         zero_chords.append(chord)
@@ -127,9 +137,7 @@ for i in range(12):
                     else:
                         other_chords.append(chord)
                 if have:
-                    all_results.append([[VAL_NOTE_DICT[note][0] for note in tuning], tuning, tuning_max_fingers, tuning_max_diff, tuning_max_fret, zero, one, two, two_far, three, other, sec_count, sec_score, zero_chords, one_chords, two_chords, two_far_chords, three_chords, other_chords])
+                    all_results.append([[VAL_NOTE_DICT[note][0] for note in tuning], tuning, tuning_max_fingers, tuning_max_diff, tuning_max_fret, tuning_min_fret, zero, one, two, two_far, three, other, sec_count, sec_score, zero_chords, one_chords, two_chords, two_far_chords, three_chords, other_chords, sorted(tab.items())])
 
-for a in sorted(all_results, key=lambda x:(x[5]+x[6]+x[7],x[5]+x[6],x[5],x[8]+x[9],x[8],-x[2],-x[3],-x[4], x[11], x[12], x[1])):
+for a in sorted(all_results, key=lambda x:(x[6]+x[7]+x[8],x[6]+x[7],x[6],x[9]+x[10],x[9],-x[2],-x[3],-x[4], x[5], x[12], x[13], x[1])):
     print(a)
-
-   
