@@ -2,9 +2,8 @@ from pychord import Chord
 from pychord.constants import VAL_NOTE_DICT
 import itertools
 
-#chords = ['G', 'C', 'D', 'Am', 'Em', 'F', 'A','Dm', 'F#m']
-chords = ['A', 'Am', 'C', 'D', 'Em', 'F', 'G']
-secondary_chords = []
+chords = ['A', 'Am', 'C', 'D', 'Dm', 'Em', 'F', 'F#m', 'G', 'Gm']
+secondary_chords = ['E', 'Bm', 'B','Bb', 'C#m', 'F#']
 
 num_str = 3
 max_fingers = 4
@@ -137,7 +136,7 @@ for i in range(12):
                     else:
                         other_chords.append(chord)
                 if have:
-                    all_results.append([[VAL_NOTE_DICT[note][0] for note in tuning], tuning, tuning_max_fingers, tuning_max_diff, tuning_max_fret, tuning_min_fret, zero, one, two, two_far, three, other, sec_count, sec_score, zero_chords, one_chords, two_chords, two_far_chords, three_chords, other_chords, sorted(tab.items())])
+                    all_results.append([[VAL_NOTE_DICT[note][0] for note in tuning], tuning, tuning_max_fingers, tuning_max_diff, tuning_max_fret, tuning_max_fret-tuning_min_fret, zero, one, two, two_far, three, other, sec_count, sec_score, zero_chords, one_chords, two_chords, two_far_chords, three_chords, other_chords, sorted(tab.items())])
 
-for a in sorted(all_results, key=lambda x:(x[6]+x[7]+x[8],x[6]+x[7],x[6],x[9]+x[10],x[9],-x[2],-x[3],-x[4], x[5], x[12], x[13], x[1])):
+for a in sorted(all_results, key=lambda x:(x[6]+x[7]+x[8]+x[9],x[6]+x[7]+x[8],x[6]+x[7],x[6],x[9],-x[2],-x[3],-x[4], -x[5], x[12], x[13], x[1])):
     print(a)
