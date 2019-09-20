@@ -1,15 +1,14 @@
 from pychord import Chord
+from pychord.constants import VAL_NOTE_DICT
 import itertools
 
-chords = ['G', 'C', 'D', 'Am', 'Em', 'F','E','Dm']
-#['C', 'G', 'A', 'D', F', 'E', 'Bb', 'B', 'Ab', 'Eb', 'Am', 'Em', 'Db', 'Dm', 'Bm']
-#['G', 'C', 'D', 'A', 'Em', 'Am', 'F', 'E', 'Bm', 'Dm', 'B', 'F#m', 'Bb']
-#['G', 'C', 'D', 'Am', 'Em', 'F']
+chords = ['G', 'C', 'D', 'Am', 'Em', 'F', 'A','Dm', 'F#m']
+secondary_chords = ['E', 'Bm']
 
-num_str = 4
-max_fingers = 3
-max_diff = 2
-max_fret = 12
+num_str = 3
+max_fingers = 4
+max_diff = 3
+max_fret = 7
 
 def comps(chord):
     components = Chord(chord).components(visible=False)
@@ -102,8 +101,35 @@ for i in range(12):
                     else:
                         other += 1
                         other_chords.append(chord)
+                sec_count = 0
+                sec_score = 0
+                for chord in secondary_chords:
+                    best = find_min(chord, strings)
+                    if not best:
+                        continue
+                    sec_count += 1
+                    fingers, diff, fret = best[0][1]
+                    if fingers == 0:
+                        sec_score += 5
+                        zero_chords.append(chord)
+                    elif fingers == 1:
+                        sec_score += 4
+                        one_chords.append(chord)
+                    elif fingers == 2 and diff <= 1:
+                        sec_score += 3
+                        two_chords.append(chord)
+                    elif fingers == 2 and diff == 2:
+                        sec_score += 2
+                        two_far_chords.append(chord)
+                    elif fingers == 3 and diff <= 2:
+                        sec_score += 1
+                        three_chords.append(chord)
+                    else:
+                        other_chords.append(chord)
                 if have:
-                    all_results.append([tuning, tuning_max_fingers, tuning_max_diff, tuning_max_fret, zero, one, two, two_far, three, other, zero_chords, one_chords, two_chords, two_far_chords, three_chords, other_chords])
+                    all_results.append([[VAL_NOTE_DICT[note][0] for note in tuning], tuning, tuning_max_fingers, tuning_max_diff, tuning_max_fret, zero, one, two, two_far, three, other, sec_count, sec_score, zero_chords, one_chords, two_chords, two_far_chords, three_chords, other_chords])
 
-for a in sorted(all_results, key=lambda x:(x[4]+x[5]+x[6],x[4]+x[5],x[4],x[7]+x[8],x[7],-x[1],-x[2],-x[3])):
+for a in sorted(all_results, key=lambda x:(x[5]+x[6]+x[7],x[5]+x[6],x[5],x[8]+x[9],x[8],-x[2],-x[3],-x[4], x[11], x[12], x[1])):
     print(a)
+
+   
