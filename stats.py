@@ -3,7 +3,7 @@ from pychord import Chord
 from collections import Counter
 from itertools import chain, combinations
 
-limit = 3
+limit = 4
 
 #note: added ('m6', (0, 3, 7, 9)) to QUALITY_DICT in pychord\constants\qualities.py
 
