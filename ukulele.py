@@ -25,7 +25,7 @@ for chord in chords:
 
 def way_len(way):
     pos = [w for w in way if w]
-    return len(pos), not pos or max(max(pos)-min(pos),1), max(way), -(max_fret+1 if not pos else min(pos))
+    return len(pos), max(max(pos)-min(pos),1) if pos else 1, max(way), -(min(pos) if pos else max_fret+1)
 
 def find_all(chord, strings):
     chord = comps(chord)
@@ -52,9 +52,9 @@ def find_min(chord, strings):
     return [way for way in all_ways if way[1]==all_ways[0][1]]
 
 def notes(numbers, deltas=None):
-    if deltas is not None:
-        numbers = [(number+delta)%12 for number,delta in zip(numbers,deltas)]
-    return [VAL_NOTE_DICT[number][0] for number in numbers]
+    if deltas is None:
+        return [VAL_NOTE_DICT[number][0] for number in numbers]
+    return [VAL_NOTE_DICT[(number+delta)%12][0]+'+'*((number+delta)//12) for number,delta in zip(numbers,deltas)]
 
 all_results = []
 for i in range(12):

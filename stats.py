@@ -62,6 +62,7 @@ count_have = sum(chords<=have_chords_set for chords in folded_per_song)
 print(have_chords, '%d/%d %.1f%%'%(count_have,len(folded_per_song),count_have/len(folded_per_song)*100))
 
 have_chords = ['A', 'Am', 'C', 'D', 'Dm', 'Em', 'F', 'F#m', 'G', 'Gm']
+#have_chords = ['Am', 'C', 'D', 'Em', 'F', 'G']
 assert all(chord in base_chords_to_comps or chord in fold_chords for chord in have_chords)
 have_chords_set = set(have_chords)
 count_have = sum(chords<=have_chords_set for chords in folded_per_song)
@@ -74,6 +75,17 @@ print(count_have)
 have_instances_per_song = [instances for instances in folded_instances_per_song if all(chord in have_chords for chord in set(instances))]
 count_have_instances = Counter(chord for instances in have_instances_per_song for chord in instances)
 print(count_have_instances)
+
+chord_to_next = {}
+for instances in have_instances_per_song:
+    for chord,next_chord in zip(instances[:-1],instances[1:]):
+        if next_chord==chord:
+            continue
+        if chord not in chord_to_next:
+            chord_to_next[chord] = Counter()
+        chord_to_next[chord][next_chord] += 1
+for chord in chord_to_next:
+    print(chord, sorted(chord_to_next[chord].items(), key=lambda x:-x[1])[0])
 
 have_chords = ['C', 'Am', 'D', 'F', 'F#m', 'G', 'Gm']
 assert all(chord in base_chords_to_comps or chord in fold_chords for chord in have_chords)
