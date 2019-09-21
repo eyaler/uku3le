@@ -61,7 +61,8 @@ have_chords_set = set(have_chords)
 count_have = sum(chords<=have_chords_set for chords in folded_per_song)
 print(have_chords, '%d/%d %.1f%%'%(count_have,len(folded_per_song),count_have/len(folded_per_song)*100))
 
-have_chords = ['A', 'Am', 'C', 'D', 'Dm', 'Em', 'F', 'F#m', 'G', 'Gm']
+have_chords = ['C', 'Cm', 'Csus4', 'C5', 'D', 'Dm', 'Dsus4', 'D5', 'Eb', 'Em', 'F', 'F#m', 'G', 'Gm', 'Gsus4', 'G5', 'A', 'Am', 'Asus2', 'A5']
+#have_chords = ['C', 'Cm', 'C5', 'D', 'Dm', 'Dsus2', 'Dsus4', 'Em', 'F', 'F#m', 'G', 'Gm', 'Gsus4', 'G5', 'A', 'Am', 'Asus2', 'D5', 'Asus4']
 #have_chords = ['Am', 'C', 'D', 'Em', 'F', 'G']
 assert all(chord in base_chords_to_comps or chord in fold_chords for chord in have_chords)
 have_chords_set = set(have_chords)

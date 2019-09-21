@@ -6,7 +6,7 @@ import itertools
 #secondary_chords = ['E', 'Bm', 'B','Bb', 'C#m', 'F#', 'Gm']
 
 chords = ['Am', 'C', 'D', 'Em', 'F', 'G']
-secondary_chords = ['A', 'E', 'Bm', 'B','Bb', 'C#m', 'Dm', 'F#', 'F#m', 'Gm']
+secondary_chords = ['A', 'E', 'Bm', 'B','Bb', 'C#m', 'Dm', 'F#', 'F#m', 'Gm', 'Cm', 'Eb', 'Dsus2', 'Dsus4', 'Asus2', 'Asus4', 'A5', 'D5', 'G5', 'E5', 'C5',  'B5', 'F5', 'F#5','Gsus4', 'Csus4']
 
 num_str = 3
 max_fingers = 4
