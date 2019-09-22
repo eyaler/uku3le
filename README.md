@@ -3,11 +3,11 @@
 ### Eyal Gruss and Ayelet Sapirshtein
 #### For Daniel Johnston
 
-A simpler 3-string tuning for ukulele 
-
-Optimizing for max songs with min fingers
+A simpler 3-string tuning for ukulele.
 
 Play 25% of songs - with only 2 fingers!
+
+We optimized a 3-string ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers.
 
 ![C](./assets/00_C.svg)
 ![C(1)](./assets/01_C(1).svg)
@@ -23,7 +23,7 @@ Play 25% of songs - with only 2 fingers!
 ![Eb](./assets/11_Eb.svg)
 ![Em](./assets/12_Em.svg)
 ![F](./assets/13_F.svg)
-![F#m](./assets/14_F#m.svg)
+![F#m](./assets/14_F%23m.svg)
 ![G](./assets/15_G.svg)
 ![Gm](./assets/16_Gm.svg)
 ![Gsus4](./assets/17_Gsus4.svg)
@@ -42,4 +42,3 @@ For completeness these are the four most popular chords that require 3 fingers:
 ![Bm](./assets/27_Bm.svg)
 
 Charts by [Chordious](https://chordious.com).
-
