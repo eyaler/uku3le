@@ -7,7 +7,10 @@ A simpler 3-string tuning for ukulele.
 
 Play 25% of songs - with only 2 fingers!
 
-We optimized a 3-string ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers.
+We optimized a ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers.
+This may help children, disabled and dexterity-challenged people to play.
+
+![ukulele-CGA](./assets/ukulele-CGA.jpg)
 
 ![C](./assets/00_C.svg)
 ![C(1)](./assets/01_C(1).svg)
@@ -34,7 +37,7 @@ We optimized a 3-string ukulele tuning to allow playing chords for a maximum num
 ![Asus4](./assets/22_Asus2.svg)
 ![A5](./assets/23_A5.svg)
 
-For completeness these are the four most popular chords that require 3 fingers:
+For completeness these are the four most important chords that require 3 fingers:
 
 ![E](./assets/24_E.svg)
 ![Bb](./assets/25_Bb.svg)
@@ -42,3 +45,5 @@ For completeness these are the four most popular chords that require 3 fingers:
 ![Bm](./assets/27_Bm.svg)
 
 Charts by [Chordious](https://chordious.com).
+
+A [Geekcon+2019](https://geekcon.org/geekcon-plus-2019) project.
