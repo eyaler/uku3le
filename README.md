@@ -37,7 +37,7 @@ This may help children, disabled and dexterity-challenged people to play.
 ![Asus4](./assets/22_Asus2.svg)
 ![A5](./assets/23_A5.svg)
 
-For completeness these are the four most important chords that require 3 fingers:
+For completeness, these are the most important missing chords requiring 3 fingers:
 
 ![E](./assets/24_E.svg)
 ![Bb](./assets/25_Bb.svg)
