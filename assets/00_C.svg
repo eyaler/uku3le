@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="134" height="328">
+<!-- Created with Chordious.WPF 2.0.10. -->
+<rect style="fill:white;fill-opacity:0;" width="134" height="328" x="0" y="0" />
+<rect style="fill:white;fill-opacity:0;stroke:black;stroke-width:2;" width="74" height="210" x="30" y="88" />
+<line style="stroke:black;stroke-width:2;" x1="67" y1="88" x2="67" y2="298" />
+<line style="stroke:black;stroke-width:2;" x1="30" y1="118" x2="104" y2="118" />
+<line style="stroke:black;stroke-width:2;" x1="30" y1="148" x2="104" y2="148" />
+<line style="stroke:black;stroke-width:2;" x1="30" y1="178" x2="104" y2="178" />
+<line style="stroke:black;stroke-width:2;" x1="30" y1="208" x2="104" y2="208" />
+<line style="stroke:black;stroke-width:2;" x1="30" y1="238" x2="104" y2="238" />
+<line style="stroke:black;stroke-width:2;" x1="30" y1="268" x2="104" y2="268" />
+<line style="stroke:black;stroke-width:4;" x1="29" y1="87" x2="105" y2="87" />
+<circle style="fill:black;fill-opacity:1;" r="10.05" cx="104" cy="283" />
+<text style="fill:black;opacity:1;font-size:38pt;font-family:serif;text-anchor:middle;" x="67" y="68">C</text>
+</svg>

@@ -7,16 +7,18 @@ import itertools
 
 chords = ['Am', 'C', 'D', 'Em', 'F', 'G']
 secondary_chords = ['A', 'E', 'Bm', 'B','Bb', 'C#m', 'Dm', 'F#', 'F#m', 'Gm', 'Cm', 'Eb', 'Dsus2', 'Dsus4', 'Asus2', 'Asus4', 'A5', 'D5', 'G5', 'E5', 'C5',  'B5', 'F5', 'F#5','Gsus4', 'Csus4']
+#secondary_chords = ['A', 'E', 'Bm', 'B', 'Dm', 'F#m', 'Bb', 'D7', 'F#', 'A7', 'C#m', 'G7', 'E7', 'Em7', 'B7', 'Gm', 'Am7', 'Eb', 'C7', 'Cadd9', 'Cm', 'C#', 'Dsus2', 'Fm', 'G#', 'G#m', 'Bm7', 'Dm7', 'Ab', 'Dsus4', 'Asus2', 'FM7', 'CM7', 'GM7', 'D#', 'F#m7', 'A5', 'D5', 'Bbm', 'F#7', 'DM7', 'Db', 'F7', 'A#', 'Gsus4', 'G5', 'Gm7', 'C#m7', 'D#m', 'AM7', 'E5', 'C#7', 'Gb', 'Cm7', 'Csus4', 'C5', 'A7sus4', 'Ebm', 'B5', 'Bb7', 'Fm7', 'EM7', 'Dadd9', 'F5', 'G#m7', 'Bsus4', 'G#7', 'A#m', 'Aadd9', 'Bsus2', 'Gadd9', 'Fadd9', 'Abm', 'BbM7', 'Em6', 'Eb7', 'Fsus4', 'Am6', 'D#7', 'F#5', 'D7sus4', 'Dbm', 'D4', 'EbM7', 'Bb5', 'Bbm7', 'E7sus4', 'E2', 'D#m7', 'Gbm', 'BM7', 'A4', 'C#5', 'B7sus4', 'Ab7', 'G4', 'Gm6', 'B2', 'A#7', 'Eb5', 'G7sus4', 'Dm6', 'Bb6', 'Ebsus2', 'G#5', 'C#dim', 'AbM7', 'E4', 'Fdim', 'F#dim', 'Gaug', 'Cdim', 'Ebm7', 'D#dim', 'Fm6', 'Gdim', 'Bdim', 'G#sus4', 'Abm7', 'C#sus4', 'A#m7', 'G#dim', 'Em/F#', 'Edim', 'Ddim', 'Bbdim', 'Eaug', 'C4', 'C7sus4', 'F#7sus4', 'Caug', 'F4', 'Db7', 'Bm6', 'Aaug', 'DbM7', 'Ab5', 'Adim', 'Cm6', 'Faug', 'Cb', 'D/Bb', 'D#5', 'D#M7', 'A#dim', 'AmM7', 'A#5', 'EmM7', 'F#M7', 'F#add9', 'Dbsus2', 'Badd11', 'F7sus4', 'Bb2', 'Gb5', 'A#M7', 'Ebdim', 'Ab/Bb', 'Absus2', 'Bbaug', 'Daug', 'DmM7', 'G#M7', 'Gb7', 'C#add9', 'Db/Eb', 'Bbm6', 'E/Bb', 'GbM7', 'Bb/Eb', 'C#M7', 'A#sus4', 'Ab7sus4', 'G/Bb', 'F#m6', 'Abm6', 'Dbsus4', 'F#4', 'A/Bb', 'G#sus2', 'Bb7sus4', 'G5/F#', 'G#m6', 'Db5', 'C#m6', 'Dbm7', 'G#6', 'F#mM7', 'C#7sus4', 'G#4', 'Eb/Ab', 'G/C#', 'E5/D#', 'Abdim', 'C/C#', 'C/F#', 'Eb7sus4', 'G#7sus4', 'Fm/Bb', 'Ebadd9', 'C/G#', 'D#6', 'D#add9', 'Dbdim', 'Gbm7', 'D/D#', 'Gbdim', 'Am/D#', 'Adim/C#', 'Bdim/D#', 'Dsus2/Bb', 'G/G#', 'G#mM7', 'C/D#', 'A#4', 'Bm/C#', 'Eb/F#', 'Dbm6', 'Bb/Db', 'Gbsus4', 'EbmM7', 'Ab/C#', 'Am/A#', 'C#/F#', 'Edim/C#', 'A#sus2', 'D#/F#', 'D/G#', 'C5/Bb', 'F/G#', 'A#/F#', 'C#mM7', 'Db7sus4', 'CbM7', 'A/Eb', 'FmM7', 'Em/G#']
+
 
 num_str = 3
 max_fingers = 4
 max_diff = 3
 max_fret = 7
-inversion = True
+fold_inversions = True
 
 def comps(chord):
     components = Chord(chord).components(visible=False)
-    if inversion:
+    if fold_inversions:
         return sorted(set([n%12 for n in components]))
     return components
 
@@ -27,7 +29,7 @@ def way_len(way):
     pos = [w for w in way if w]
     return len(pos), max(max(pos)-min(pos),1) if pos else 1, max(way), -(min(pos) if pos else max_fret+1)
 
-def find_all(chord, strings):
+def find_all(chord, strings, strict=True):
     chord = comps(chord)
     if len(chord)==num_str-2:
         all_chords = [a for n in chord for m in chord for a in itertools.permutations(chord+[n]+[m])]
@@ -35,8 +37,10 @@ def find_all(chord, strings):
         all_chords = [a for n in chord for a in itertools.permutations(chord+[n])]
     elif len(chord)==num_str:
         all_chords = itertools.permutations(chord)
-    else:
+    elif strict:
         raise Exception('len(chord)=%d but num_str=%d'%(len(chord),num_str))
+    else:
+        return []
     all_chords = set(all_chords)
     all_ways = set()
     for c in all_chords:
@@ -47,8 +51,8 @@ def find_all(chord, strings):
                 all_ways.add(candidate)
     return sorted([(way, way_len(way)) for way in all_ways], key=lambda x: x[1])
 
-def find_min(chord, strings):
-    all_ways = find_all(chord, strings)
+def find_min(chord, strings, strict=True):
+    all_ways = find_all(chord, strings, strict)
     return [way for way in all_ways if way[1]==all_ways[0][1]]
 
 def notes(numbers, deltas=None):
@@ -67,7 +71,7 @@ for i in range(12):
                     tuning = (k, j, i)
                 if len(set(tuning))<len(tuning)-1:
                     continue
-                strings = [[(a%12 if inversion else a) for a in (range(n,n+max_fret+1))] for n in tuning]
+                strings = [[(a%12 if fold_inversions else a) for a in (range(n,n+max_fret+1))] for n in tuning]
                 have = True
                 tuning_max_fingers = 0
                 tuning_max_diff = 0
@@ -121,7 +125,7 @@ for i in range(12):
                 sec_count = 0
                 sec_score = 0
                 for chord in secondary_chords:
-                    best = find_min(chord, strings)
+                    best = find_min(chord, strings, strict=False)
                     if not best:
                         continue
                     tab[chord] = [(way[0], notes(tuning, way[0])) for way in best]

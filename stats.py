@@ -4,12 +4,22 @@ from collections import Counter
 from itertools import chain, combinations
 
 limit = 4
+fold_inversions = True
 
-#note: added ('m6', (0, 3, 7, 9)) to QUALITY_DICT in pychord\constants\qualities.py
+#note: added the following to QUALITY_DICT in pychord\constants\qualities.py
+# ('add2', (0, 2, 4, 7)),
+# ('madd2', (0, 2, 3, 7)),
+# ('add4', (0, 4, 5, 7)),
+# ('madd4', (0, 3, 5, 7)),
+# ('m6', (0, 3, 7, 9)),
+# ('7sus2', (0, 2, 7, 10)),
+# ('madd9', (0, 3, 7, 14))
 
 def fix(chord):
-    chord = chord.replace('maj7', 'M7').replace('maj9', 'M9').replace('(', '').replace(')', '')
-    if chord.endswith('sus'):
+    chord = chord.replace('ADD', 'add').replace('7b', '7-').replace('7b', '7-').replace('7#', '7+').replace('dim7', 'dim6').replace('maj7', 'M7').replace('maj9', 'M9').replace('m11', '11').replace('(', '').replace(')', '')
+    if chord.endswith('7sus'):
+        chord = chord.replace('7sus', '7sus4')
+    elif chord.endswith('sus'):
         chord = chord.replace('sus','5')
     return chord
 
@@ -17,7 +27,7 @@ db = pymysql.connect(host="localhost", user="root", passwd="", db="UltimateGuita
 cur = db.cursor()
 
 cur.execute("select chords from chords")
-instances_per_song = [[fix(chord) for chord in row[0].split(',')] for row in cur.fetchall()]
+instances_per_song = [[fix(chord) for chord in row[0].split(',') if chord] for row in cur.fetchall()]
 chords_per_song = [set(instances) for instances in instances_per_song]
 count_instances = Counter(chord for instances in instances_per_song for chord in instances)
 
@@ -27,7 +37,9 @@ fold_chords = {}
 seen_comps_to_chords = {}
 for chord, cnt in sorted(count_instances.items(), key=lambda x:(-x[1],x[0])):
     try:
-        comps = tuple(sorted(set(Chord(chord).components())))
+        comps = Chord(chord).components(visible=False)
+        if fold_inversions:
+            comps = tuple(sorted(set(n%12 for n in comps)))
     except:
         bad_chords[chord] = cnt
         continue
@@ -62,6 +74,14 @@ count_have = sum(chords<=have_chords_set for chords in folded_per_song)
 print(have_chords, '%d/%d %.1f%%'%(count_have,len(folded_per_song),count_have/len(folded_per_song)*100))
 
 have_chords = ['C', 'Cm', 'Csus4', 'C5', 'D', 'Dm', 'Dsus4', 'D5', 'Eb', 'Em', 'F', 'F#m', 'G', 'Gm', 'Gsus4', 'G5', 'A', 'Am', 'Asus2', 'A5']
+#have_chords = ['C', 'Cm', 'C5', 'D', 'Dm', 'Dsus2', 'Dsus4', 'Em', 'F', 'F#m', 'G', 'Gm', 'Gsus4', 'G5', 'A', 'Am', 'Asus2', 'D5', 'Asus4']
+#have_chords = ['Am', 'C', 'D', 'Em', 'F', 'G']
+assert all(chord in base_chords_to_comps or chord in fold_chords for chord in have_chords)
+have_chords_set = set(have_chords)
+count_have = sum(chords<=have_chords_set for chords in folded_per_song)
+print(have_chords, '%d/%d %.1f%%'%(count_have,len(folded_per_song),count_have/len(folded_per_song)*100))
+
+have_chords = ['C', 'Cm', 'Csus4', 'C5', 'D', 'Dm', 'Dsus4', 'D5', 'Eb', 'Em', 'F', 'F#m', 'G', 'Gm', 'Gsus4', 'G5', 'A', 'Am', 'Asus2', 'A5', 'Bm', 'B', 'E', 'Bb']
 #have_chords = ['C', 'Cm', 'C5', 'D', 'Dm', 'Dsus2', 'Dsus4', 'Em', 'F', 'F#m', 'G', 'Gm', 'Gsus4', 'G5', 'A', 'Am', 'Asus2', 'D5', 'Asus4']
 #have_chords = ['Am', 'C', 'D', 'Em', 'F', 'G']
 assert all(chord in base_chords_to_comps or chord in fold_chords for chord in have_chords)
