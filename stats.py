@@ -13,7 +13,9 @@ fold_inversions = True
 # ('madd4', (0, 3, 5, 7)),
 # ('m6', (0, 3, 7, 9)),
 # ('7sus2', (0, 2, 7, 10)),
-# ('madd9', (0, 3, 7, 14))
+# ('madd9', (0, 3, 7, 14)),
+# ('6sus2', (0, 2, 7, 9)),
+# ('6sus4', (0, 5, 7, 9)),
 
 def fix(chord):
     chord = chord.replace('ADD', 'add').replace('7b', '7-').replace('7b', '7-').replace('7#', '7+').replace('dim7', 'dim6').replace('maj7', 'M7').replace('maj9', 'M9').replace('m11', '11').replace('B#','C').replace('E#','F').replace('Cb','B').replace('Fb','E').replace('m#','#m').replace('(', '').replace(')', '')
