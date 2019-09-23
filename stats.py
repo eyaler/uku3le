@@ -16,7 +16,9 @@ fold_inversions = True
 # ('madd9', (0, 3, 7, 14))
 
 def fix(chord):
-    chord = chord.replace('ADD', 'add').replace('7b', '7-').replace('7b', '7-').replace('7#', '7+').replace('dim7', 'dim6').replace('maj7', 'M7').replace('maj9', 'M9').replace('m11', '11').replace('B#','C').replace('E#','F').replace('Cb','B').replace('Fb','E').replace('(', '').replace(')', '')
+    chord = chord.replace('ADD', 'add').replace('7b', '7-').replace('7b', '7-').replace('7#', '7+').replace('dim7', 'dim6').replace('maj7', 'M7').replace('maj9', 'M9').replace('m11', '11').replace('B#','C').replace('E#','F').replace('Cb','B').replace('Fb','E').replace('m#','#m').replace('(', '').replace(')', '')
+    if chord.endswith('sus7'):
+        chord = chord.replace('sus7', '7sus4')
     if chord.endswith('7sus'):
         chord = chord.replace('7sus', '7sus4')
     elif chord.endswith('sus'):

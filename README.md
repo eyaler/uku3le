@@ -10,14 +10,18 @@ Play 25% of songs - with only 2 fingers!
 We optimized a ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers, 
 and trying to give the more important chords the easier fingerings. We do not allow barres nor muted strings. 
 Chord importance is determined not by prevalence, but by the number of complete songs they playing given the other chords. 
-This is a version of the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force. 
-Our solution uses data of 20,000 most popular rock, pop, folk and country songs from 1960 to date, 
+This optimization problem is a version of the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force. 
+
+We use data of 20,000 most popular rock, pop, folk and country songs from 1960 to date, 
 scraped from [Ultimate Guitar](https://www.ultimate-guitar.com). 
 The scraper is based on [Ljfernando's Progressions repo](https://github.com/Ljfernando/Progressions), 
 and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord). 
 Different from most analyses, we do not normalize the data by transposition as we want to allow users to play songs in 
-their original form (Pink Floyd's "In the Flesh?" starts with an A!), we do not want to a degenerate songs with scale shifts, 
-and we do not want to require the user to do transpositions. We are however lax about chord voicings and inversions. 
+their original form (Pink Floyd's "In the Flesh?" starts with an A!), we do not want to a degenerate songs with key shifts, 
+and we do not want to require the user to do transpositions. We are however lax about chord voicings and inversions.
+
+Considering the use of up to two fingers, our chosen tuning of C-G-A allows playing 23.3% of songs with up to 4 note chords and 42.4% of songs with up to 3 note chords, 
+as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning.  
 We hope this system may help children, perplexed beginners, people with disablities and the dexterity-challenged to play strings.
 
 <br/>
