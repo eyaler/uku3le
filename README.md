@@ -11,7 +11,7 @@ We optimized a ukulele tuning to allow playing chords for a maximum number of so
 and trying to give the more important chords the easier fingerings. We do not allow barres nor muted strings. 
 Chord importance is determined not by prevalence, but by the number of complete songs they playing given the other chords. 
 This is a version of the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force. 
-Our solution is uses data from 20,000 most popular rock, pop, folk and country songs from 1960 to date, 
+Our solution uses data of 20,000 most popular rock, pop, folk and country songs from 1960 to date, 
 scraped from [Ultimate Guitar](https://www.ultimate-guitar.com). 
 The scraper is based on [Ljfernando's Progressions repo](https://github.com/Ljfernando/Progressions), 
 and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord). 
