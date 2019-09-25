@@ -3,8 +3,8 @@ from pychord import Chord
 from collections import Counter
 from itertools import chain, combinations
 
-limit = 4
-fold_inversions = True
+limit = None
+fold_inversions = False
 
 #note: added the following to QUALITY_DICT in pychord\constants\qualities.py
 # ('add2', (0, 2, 4, 7)),
@@ -18,7 +18,7 @@ fold_inversions = True
 # ('6sus4', (0, 5, 7, 9)),
 
 def fix(chord):
-    chord = chord.replace('ADD', 'add').replace('7b', '7-').replace('7b', '7-').replace('7#', '7+').replace('dim7', 'dim6').replace('maj7', 'M7').replace('maj9', 'M9').replace('m11', '11').replace('B#','C').replace('E#','F').replace('Cb','B').replace('Fb','E').replace('m#','#m').replace('(', '').replace(')', '')
+    chord = chord.replace('ADD', 'add').replace('7b', '7-').replace('7b', '7-').replace('7#', '7+').replace('dim7', 'dim6').replace('maj7', 'M7').replace('maj9', 'M9').replace('m11', '11').replace('B#','C').replace('E#','F').replace('Cb','B').replace('Fb','E').replace('m#','#m').replace('mb','bm').replace('7m','m7').replace('(', '').replace(')', '')
     if chord.endswith('sus7'):
         chord = chord.replace('sus7', '7sus4')
     if chord.endswith('7sus'):
@@ -32,6 +32,7 @@ cur = db.cursor()
 
 cur.execute("select chords from chords")
 instances_per_song = [[fix(chord) for chord in row[0].split(',') if chord] for row in cur.fetchall()]
+instances_per_song = [instances for instances in instances_per_song if len(instances)>0]
 chords_per_song = [set(instances) for instances in instances_per_song]
 count_instances = Counter(chord for instances in instances_per_song for chord in instances)
 
@@ -41,7 +42,7 @@ fold_chords = {}
 seen_comps_to_chords = {}
 for chord, cnt in sorted(count_instances.items(), key=lambda x:(-x[1],x[0])):
     try:
-        comps = Chord(chord).components(visible=False)
+        comps = tuple(Chord(chord).components(visible=False))
         if fold_inversions:
             comps = tuple(sorted(set(n%12 for n in comps)))
     except:
@@ -68,6 +69,13 @@ print(max_needed)
 
 count_chords = Counter(chord for chords in folded_per_song for chord in chords)
 print(count_chords)
+
+instances = [chord for chords in folded_instances_per_song for chord in chords]
+count_folded_instances = Counter(instances)
+print(count_instances)
+print(len(instances))
+
+print(sorted([(chords,cnt) for chords,cnt in Counter(tuple(sorted(chords)) for chords in folded_per_song).items() if cnt>80], key=lambda x:(-x[1],x[1])))
 
 print(sorted([(chords,cnt) for chords,cnt in Counter(tuple(sorted(chords)) for chords in folded_per_song if 3<=len(chords)<=6).items() if cnt>10], key=lambda x:(-x[1],x[1])))
 
@@ -101,16 +109,6 @@ have_instances_per_song = [instances for instances in folded_instances_per_song 
 count_have_instances = Counter(chord for instances in have_instances_per_song for chord in instances)
 print(count_have_instances)
 
-chord_to_next = {}
-for instances in have_instances_per_song:
-    for chord,next_chord in zip(instances[:-1],instances[1:]):
-        if next_chord==chord:
-            continue
-        if chord not in chord_to_next:
-            chord_to_next[chord] = Counter()
-        chord_to_next[chord][next_chord] += 1
-for chord in chord_to_next:
-    print(chord, sorted(chord_to_next[chord].items(), key=lambda x:-x[1])[0])
 
 have_chords = ['C', 'Am', 'D', 'F', 'F#m', 'G', 'Gm']
 assert all(chord in base_chords_to_comps or chord in fold_chords for chord in have_chords)
@@ -131,10 +129,23 @@ def powerset(iterable, max_len=None):
         max_len = len(s)
     return chain.from_iterable(combinations(s, r) for r in range(1,max_len+1))
 
-top = 16
-max_len = 16
+top = 20
+max_len = 13
 top_chords = [chord[0] for chord in sorted(count_chords.items(), key=lambda x: -x[1])][:top]
 print(top_chords)
+
+chord_to_next = {}
+for instances in folded_instances_per_song:
+    for chord,next_chord in zip(instances[:-1],instances[1:]):
+        if next_chord==chord:
+            continue
+        if chord not in chord_to_next:
+            chord_to_next[chord] = Counter()
+        chord_to_next[chord][next_chord] += 1
+progressions = sorted([(chord, sorted(chord_to_next[chord].items(), key=lambda x:-x[1])[0]) for chord in chord_to_next], key=lambda x: (-x[1][1], x[0], x[1][0]))
+print(progressions)
+
+
 for i in range(1,min(max_len,len(top_chords))+1):
     subs = powerset(top_chords,i)
     best_sub = []

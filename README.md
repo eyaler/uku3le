@@ -9,8 +9,13 @@ Play 25% of songs - with only 2 fingers!
 
 We optimized a ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers, 
 and trying to give the more important chords the easier fingerings. We do not allow barres nor muted strings. 
-Chord importance is determined not by prevalence, but by the number of complete songs they playing given the other chords. 
-This optimization problem is a version of the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force. 
+Chord importance is determined not necessarily by prevalence, but by the number of complete songs they playing given the other chords. 
+This is an optimization problem called the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force.
+For example the 6 most prevalent chords by songs are: C, D, F, G, Em, A. The 6 most prevalent chords by chord instances are: C, D, F, G, Am, A.
+And the 6 most important chords, that is the 6 chords that allow playing the maximal number of complete songs are: C, D, F, G, Em, Am.
+Which makes sense for the latter as this is just the combination of the chords of the [most popular](http://www.hooktheory.com/blog/music-theory-analysis-1300-songs-for-songwriting-part2) 
+I-V-vi-IV progression for the [most popular](http://www.hooktheory.com/blog/i-analyzed-the-chords-of-1300-popular-songs-for-patterns-this-is-what-i-found) C major (C-G-Am-F) and G major (G-D-Em-C) scales.
+By the way, for 7 chords the three groups converge to the union of the above.
 
 We use data of 20,000 most popular rock, pop, folk and country songs from 1960 to date, 
 scraped from [Ultimate Guitar](https://www.ultimate-guitar.com). 
@@ -18,7 +23,7 @@ The scraper is based on [Ljfernando's Progressions repo](https://github.com/Ljfe
 and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord). 
 Different from most analyses, we do not normalize the data by transposition as we want to allow users to play songs in 
 their original form (Pink Floyd's "In the Flesh?" starts with an A!), we do not want to a degenerate songs with key shifts, 
-and we do not want to require the user to do transpositions. We are however lax about chord voicings and inversions.
+and we do not want to require the user to do transpositions. However, we assume invariance to chord voicings and inversions.
 
 Considering the use of up to two fingers, our chosen tuning of C-G-A allows playing 23.3% of songs with up to 4 note chords and 42.4% of songs with up to 3 note chords, 
 as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning.  
