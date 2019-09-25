@@ -11,6 +11,7 @@ We optimized a ukulele tuning to allow playing chords for a maximum number of so
 and trying to give the more important chords the easier fingerings. We do not allow barres nor muted strings. 
 Chord importance is determined not necessarily by prevalence, but by the number of complete songs they playing given the other chords. 
 This is an optimization problem called the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force.
+
 For example the 6 most prevalent chords by songs are: C, D, F, G, Em, A. The 6 most prevalent chords by chord instances are: C, D, F, G, Am, A.
 And the 6 most important chords, that is the 6 chords that allow playing the maximal number of complete songs are: C, D, F, G, Em, Am.
 Which makes sense for the latter as this is just the combination of the chords of the [most popular](http://www.hooktheory.com/blog/music-theory-analysis-1300-songs-for-songwriting-part2) 
