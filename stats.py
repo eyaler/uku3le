@@ -4,7 +4,7 @@ from collections import Counter
 from itertools import chain, combinations
 
 limit = None
-fold_inversions = False
+fold_voicing = False
 
 #note: added the following to QUALITY_DICT in pychord\constants\qualities.py
 # ('add2', (0, 2, 4, 7)),
@@ -43,7 +43,7 @@ seen_comps_to_chords = {}
 for chord, cnt in sorted(count_instances.items(), key=lambda x:(-x[1],x[0])):
     try:
         comps = tuple(Chord(chord).components(visible=False))
-        if fold_inversions:
+        if fold_voicing:
             comps = tuple(sorted(set(n%12 for n in comps)))
     except:
         bad_chords[chord] = cnt

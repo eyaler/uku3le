@@ -14,11 +14,11 @@ num_str = 3
 max_fingers = 4
 max_diff = 3
 max_fret = 7
-fold_inversions = True
+fold_voicing = True
 
 def comps(chord):
     components = Chord(chord).components(visible=False)
-    if fold_inversions:
+    if fold_voicing:
         return sorted(set([n%12 for n in components]))
     return components
 
@@ -71,7 +71,7 @@ for i in range(12):
                     tuning = (k, j, i)
                 if len(set(tuning))<len(tuning)-1:
                     continue
-                strings = [[(a%12 if fold_inversions else a) for a in (range(n,n+max_fret+1))] for n in tuning]
+                strings = [[(a%12 if fold_voicing else a) for a in (range(n,n+max_fret+1))] for n in tuning]
                 have = True
                 tuning_max_fingers = 0
                 tuning_max_diff = 0
