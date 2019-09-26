@@ -28,7 +28,7 @@ and we do not want to require the user to do transpositions. However, in our opt
 including chord inversions - change of the root note.
 
 Considering the use of up to two fingers, our chosen tuning of C-G-A allows playing 23.3% of songs with up to 4 note chords and 42.4% of songs with up to 3 note chords, 
-as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning.  
+as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning. Following are the chord charts for 21 popular chords requiring up to two fingers and a reach difference up to two frets.   
 We hope this system may help children, perplexed beginners, people with disablities and the dexterity-challenged to play strings.
 
 <br/>
