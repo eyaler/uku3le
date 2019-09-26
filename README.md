@@ -9,7 +9,7 @@ Play 25% of songs - with only 2 fingers!
 
 We optimized a ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers, 
 and trying to give the more important chords the easier fingering. We do not allow barres nor muted strings. 
-Chord importance is determined not necessarily by prevalence, but by the number of complete songs they playing given the other chords. 
+Chord importance is determined not necessarily by prevalence, but by the number of complete songs they allow playing given the other chords.
 This is an optimization problem called the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force.
 
 For example the 6 most prevalent chords by songs are: C, D, F, G, Em, A. The 6 most prevalent chords by chord instances are: C, D, F, G, Am, A.
@@ -24,11 +24,15 @@ The scraper is based on [Ljfernando's Progressions repo](https://github.com/Ljfe
 and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord). 
 Different from most analyses, we do not normalize the data by transposition as we want to allow users to play songs in 
 their original form (Pink Floyd's "In the Flesh?" starts with an A!), we do not want to a degenerate songs with key shifts, 
-and we do not want to require the user to do transpositions. However, in our optimization we were indifferent to the chord voicing - the octave choices for each note in the chord,
+and we do not want to require the user to do transpositions. 
+However, in our optimization we were indifferent to the chord voicing - the octave choices for each note in the chord,
 including chord inversions - change of the root note.
 
-Considering the use of up to two fingers, our chosen tuning of C-G-A allows playing 23.3% of songs with up to 4 note chords and 42.4% of songs with up to 3 note chords, 
-as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning. Following are the chord charts for 21 popular chords requiring up to two fingers and a reach difference up to two frets.   
+Considering the use of up to two fingers, our chosen tuning of C-G-A allows playing 23.3% of songs with up to 4-note chords and 42.4% of songs with up to 3-note chords, 
+as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning. 
+Note that one could potentially further simplify 4-note chords to incomplete versions with 3 notes, which we did not do here. 
+We do pay an additional price of needing to utilize frets number 2 to 7 to play these chords, and some other 3-note chords would even require higher frets.
+Following are the chord charts for 21 popular chords requiring up to two fingers and a reach difference of up to two frets.
 We hope this system may help children, perplexed beginners, people with disablities and the dexterity-challenged to play strings.
 
 <br/>
