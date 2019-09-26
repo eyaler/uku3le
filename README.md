@@ -32,6 +32,7 @@ Considering the use of up to two fingers, our chosen tuning of C-G-A allows play
 as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning. 
 Note that one could potentially further simplify 4-note chords to incomplete versions with 3 notes, which we did not do here. 
 We do pay an additional price of needing to utilize frets number 2 to 7 to play these chords, and some other 3-note chords would even require higher frets.
+
 Following are the chord charts for 21 popular chords requiring up to two fingers and a reach difference of up to two frets.
 We hope this system may help children, perplexed beginners, people with disablities and the dexterity-challenged to play strings.
 
