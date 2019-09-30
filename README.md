@@ -34,7 +34,7 @@ Note that one could potentially further simplify 4-note chords to incomplete ver
 We do pay an additional price of needing to utilize frets number 2 to 7 to play these chords, and some other 3-note chords would even require higher frets.
 
 Following are the chord charts for 20 popular chords requiring up to two fingers and a reach difference of up to two frets.
-We hope this system may help children, perplexed beginners, people with disablities and the dexterity-challenged to play strings.
+We hope this system may help children, perplexed beginners, people with disabilities and the dexterity-challenged to play strings.
 
 <br/>
 
