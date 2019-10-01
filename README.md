@@ -11,6 +11,7 @@ We optimized a ukulele tuning to allow playing chords for a maximum number of so
 and trying to give the more important chords the easier fingering. We do not allow barres nor muted strings. 
 Chord importance is determined not necessarily by prevalence, but by the number of complete songs they allow playing given the other chords.
 This is an optimization problem called the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force.  
+
 For example, the 6 most prevalent chords, counting songs are: C, D, F, G, Em, A. The 6 most prevalent chords, counting chord instances are: C, D, F, G, Am, A.
 And the 6 most important chords, that is the 6 chords that allow playing the maximal number of complete songs are: C, D, F, G, Em, Am.
 Which makes sense for the latter as this is just the combination of the chords of the [most popular](http://www.hooktheory.com/blog/music-theory-analysis-1300-songs-for-songwriting-part2) 
@@ -43,7 +44,7 @@ We do pay an additional price of needing to utilize frets number 2 to 7 to play 
 The solution has some degrees of freedom concerning the string order and choice of octaves. However, other considerations such as proper string tension without changing strings, suggested that we fix the tuning to C4-G4-A4, 
 which is close to the bottom three of the standard G4-C4-E4-A4. Following are the chord charts for 20 popular chords requiring up to two fingers and a reach difference of up to two frets.
 
-We hope this system may help children, perplexed beginners, people with disabilities and the dexterity-challenged to play strings.
+We hope this system may help children, beginners with difficulties, people with disabilities and the dexterity-challenged (including the first author) to play strings.
 
 <br/>
 
