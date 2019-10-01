@@ -5,7 +5,7 @@
 
 A simpler 3-string tuning for ukulele.
 
-Play 25% of songs - with only 2 fingers!
+Play 25% of songs - with only two fingers!
 
 We optimized a ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers, 
 and trying to give the more important chords the easier fingering. We do not allow barres nor muted strings. 
@@ -36,7 +36,7 @@ their original form (Pink Floyd's "In the Flesh?" starts with an A!), we do not 
 and we do not want to require the user to do transpositions. However, in our optimization we were indifferent to the chord voicing - the octave choices for each note in the chord,
 including chord inversions - change of the root note.
 
-**Results:** Our optimization suggeted sacrificing the top string and tuning the 3 bottom ones to C-G-A. 
+**Results:** Our optimization suggeted sacrificing the top string and tuning the three bottom ones to C-G-A. 
 Considering the use of up to two fingers, our tuning allows playing 23.3% of songs having up to 4-note chords and 42.4% of songs having up to 3-note chords, 
 as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning. 
 Note that one could potentially further simplify 4-note chords to incomplete versions with 3 notes, which we did not do here. 
@@ -75,7 +75,7 @@ We hope this system may help children, beginners with difficulties, people with 
 ![Asus4](assets/22_Asus2.svg)
 ![A5](assets/23_A5.svg)
 
-Here are the most important missing chords requiring 3 fingers:
+Here are the most important missing chords requiring three fingers:
 
 ![E](assets/24_E.svg)
 ![Bb](assets/25_Bb.svg)
