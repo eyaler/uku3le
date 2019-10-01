@@ -1,5 +1,5 @@
 # Uku3le
-## C4 G4 A4
+## C4-G4-A4
 ### Eyal Gruss and Ayelet Sapirshtein
 #### For Daniel Johnston
 
@@ -18,8 +18,17 @@ Which makes sense for the latter as this is just the combination of the chords o
 I-V-vi-IV progression for the [most popular](http://www.hooktheory.com/blog/i-analyzed-the-chords-of-1300-popular-songs-for-patterns-this-is-what-i-found) C major (C-G-Am-F) and G major (G-D-Em-C) scales.
 By the way, for 7 chords the three groups converge to the union of the above.
 
-We use data of 19,358 most popular rock, pop, folk and country songs from 1960 to date, 
-scraped from [Ultimate Guitar](https://www.ultimate-guitar.com). 
+**Previous work:** For guitar, one has the open tunings, e.g. open G (D2-G2-D3-G3-B3-D4) and open D (D2-A2-D3-F#3-A3-D4).
+An open strum will give G and D respectively, and all other major chords can be played with a full barre (holding all strings down with one finger), on each of the frets. 
+For the open D tuning, one could also baree and strum just the top two or three strings to get all two-note "power chords" (designated C5, D5 etc.).
+For the ukulele, Douglas Reynolds has suggested the ["One Finger Ukulele"](https://playuke.net/one-finger-ukulele) system using a C2-G2-C3-G3 tuning, 
+and using full barre to play only power chords. Reynold's suggests this tuning will work for a baritone ukulele and for a tenor ukulele with a change of strings, but not for the most common smaller soprano ukalele. 
+Finally, the standard soprano ukulele tuning: G4-C4-E4-A4, already offers a nice selection of easy chords: Am7 - is the open strum;  
+C, C7, Am and A7 - use only one finger; Em7, F, and A - two fingers on the same or consecutive frets. All without barees or muted strings. 
+This, in fact, is what led us to the idea that we may be able to do better! 
+
+**Data:** We scraped 19,358 most popular rock, pop, folk and country songs from 1960 to date, 
+from [Ultimate Guitar](https://www.ultimate-guitar.com), by querying the top 1000 "hits" for each genre and decade combination. 
 The scraper is based on [Ljfernando's Progressions repo](https://github.com/Ljfernando/Progressions), 
 and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord). 
 Different from most analyses, we do not normalize the data by transposition as we want to allow users to play songs in 

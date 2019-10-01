@@ -188,11 +188,11 @@ for song in folded_instances_per_song:
         if chord not in chord_to_next:
             chord_to_next[chord] = Counter()
         chord_to_next[chord][next_chord] += 1
-progressions1 = sorted([(chord, sorted(next_chords.items(), key=lambda x:-x[1])[0]) for chord, next_chords in chord_to_next.items()], key=lambda x: (-x[1][1], x[0], x[1][0]))[:30]
-print(progressions1)
-progressions = sorted([(chord + '  →  ' + next_chord[0], next_chord[1]/(len(instances)-len(folded_per_song))) for chord, next_chords in chord_to_next.items() for next_chord in next_chords.items()], key=lambda x: (-x[1], x[0]))[:60]
-print(progressions)
-plot(os.path.join('assets','Chord transition prevalence by instance'), progressions[:18], [color_dict[chord[0].split(' ')[0]] for chord in progressions[:18]], total=True, font_size=11)
+transitions1 = sorted([(chord, sorted(next_chords.items(), key=lambda x:-x[1])[0]) for chord, next_chords in chord_to_next.items()], key=lambda x: (-x[1][1], x[0], x[1][0]))[:30]
+print(transitions1)
+transitions = sorted([(chord + '  →  ' + next_chord[0], next_chord[1]/(len(instances)-len(folded_per_song))) for chord, next_chords in chord_to_next.items() for next_chord in next_chords.items()], key=lambda x: (-x[1], x[0]))[:60]
+print(transitions)
+plot(os.path.join('assets','Chord transition prevalence by instance'), transitions[:18], [color_dict[chord[0].split(' ')[0]] for chord in transitions[:18]], total=True, font_size=11)
 
 results = []
 for i in range(1,min(max_len,len(top_chords))+1):
