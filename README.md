@@ -12,7 +12,7 @@ and trying to give the more important chords the easier fingering. We do not all
 Chord importance is determined not necessarily by prevalence, but by the number of complete songs they allow playing given the other chords.
 This is an optimization problem called the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force.
 
-For example the 6 most prevalent chords by songs are: C, D, F, G, Em, A. The 6 most prevalent chords by chord instances are: C, D, F, G, Am, A.
+For example, the 6 most prevalent chords, counting songs are: C, D, F, G, Em, A. The 6 most prevalent chords, counting chord instances are: C, D, F, G, Am, A.
 And the 6 most important chords, that is the 6 chords that allow playing the maximal number of complete songs are: C, D, F, G, Em, Am.
 Which makes sense for the latter as this is just the combination of the chords of the [most popular](http://www.hooktheory.com/blog/music-theory-analysis-1300-songs-for-songwriting-part2) 
 I-V-vi-IV progression for the [most popular](http://www.hooktheory.com/blog/i-analyzed-the-chords-of-1300-popular-songs-for-patterns-this-is-what-i-found) C major (C-G-Am-F) and G major (G-D-Em-C) scales.
@@ -77,7 +77,7 @@ Charts by [Chordious](https://chordious.com).
 Some statistics:
 
 ![Chord prevalence by songs](assets/chord_prevalence_by_songs.svg)
-![Chord prevalence by instance](assets/chord_prevalence_by_instance.svg)
+![Chord prevalence by chord instance](assets/chord_prevalence_by_chord_instance.svg)
 ![Distinct chords by songs](assets/distinct_chords_by_songs.svg)
 ![Chord set prevalence by songs](assets/chord_set_prevalence_by_songs.svg)
 

@@ -99,7 +99,7 @@ count_folded_instances = Counter(instances)
 print(count_instances)
 print(len(instances))
 sorted_instances = sorted([(chord,cnt/len(instances)) for chord,cnt in count_instances.items()], key=lambda x:(-x[1],x[0]))[:13]
-plot(os.path.join('assets','chord_prevalence_by_instance'), sorted_instances, [color_dict[chord[0]] for chord in sorted_instances])
+plot(os.path.join('assets','chord_prevalence_by_chord_instance'), sorted_instances, [color_dict[chord[0]] for chord in sorted_instances])
 
 max_needed = Counter(len(a) for a in folded_per_song)
 print(max_needed)
