@@ -192,7 +192,7 @@ progressions1 = sorted([(chord, sorted(next_chords.items(), key=lambda x:-x[1])[
 print(progressions1)
 progressions = sorted([(chord + '  →  ' + next_chord[0], next_chord[1]/(len(instances)-len(folded_per_song))) for chord, next_chords in chord_to_next.items() for next_chord in next_chords.items()], key=lambda x: (-x[1], x[0]))[:60]
 print(progressions)
-plot(os.path.join('assets','Next chord prevalence by instance'), progressions[:18], [color_dict[chord[0].split(' ')[0]] for chord in progressions[:18]], total=True, font_size=11)
+plot(os.path.join('assets','Chord transition prevalence by instance'), progressions[:18], [color_dict[chord[0].split(' ')[0]] for chord in progressions[:18]], total=True, font_size=11)
 
 results = []
 for i in range(1,min(max_len,len(top_chords))+1):
