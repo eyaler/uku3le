@@ -10,8 +10,7 @@ Play 25% of songs - with only 2 fingers!
 We optimized a ukulele tuning to allow playing chords for a maximum number of songs with a minimum number of fingers, 
 and trying to give the more important chords the easier fingering. We do not allow barres nor muted strings. 
 Chord importance is determined not necessarily by prevalence, but by the number of complete songs they allow playing given the other chords.
-This is an optimization problem called the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force.
-
+This is an optimization problem called the [densest k-subhypergraph problem](https://arxiv.org/abs/1605.04284), which we solve by brute force.  
 For example, the 6 most prevalent chords, counting songs are: C, D, F, G, Em, A. The 6 most prevalent chords, counting chord instances are: C, D, F, G, Am, A.
 And the 6 most important chords, that is the 6 chords that allow playing the maximal number of complete songs are: C, D, F, G, Em, Am.
 Which makes sense for the latter as this is just the combination of the chords of the [most popular](http://www.hooktheory.com/blog/music-theory-analysis-1300-songs-for-songwriting-part2) 
@@ -20,30 +19,30 @@ By the way, for 7 chords the three groups converge to the union of the above.
 
 **Previous work:** For guitar, one has the open tunings, e.g. open G (D2-G2-D3-G3-B3-D4) and open D (D2-A2-D3-F#3-A3-D4).
 An open strum will give G and D respectively, and all other major chords can be played with a full barre (holding all strings down with one finger), on each of the frets. 
-For the open D tuning, one could also baree and strum just the top two or three strings to get all two-note "power chords" (designated C5, D5 etc.).
+For the open D tuning, one could also baree and strum just the top two or three strings to get all two-note "power chords" (designated C5, D5 etc.).  
 For the ukulele, Douglas Reynolds has suggested the ["One Finger Ukulele"](https://playuke.net/one-finger-ukulele) system using a C2-G2-C3-G3 tuning, 
-and using full barre to play only power chords. Reynold's suggests this tuning will work for a baritone ukulele and for a tenor ukulele with a change of strings, but not for the most common smaller soprano ukalele. 
-Finally, the standard soprano ukulele tuning: G4-C4-E4-A4, already offers a nice selection of easy chords: Am7 - is the open strum;  
+and using full barre to play only power chords. Reynold's suggests this tuning will work for a baritone ukulele and for a tenor ukulele with a change of strings, but not for the most common smaller soprano ukalele.  
+Finally, the standard soprano ukulele tuning: G4-C4-E4-A4, already offers a nice selection of easy chords: Am7 - is the open strum; 
 C, C7, Am and A7 - use only one finger; Em7, F, and A - two fingers on the same or consecutive frets. All without barees or muted strings. 
 This, in fact, is what led us to the idea that we may be able to do better! 
 
 **Data:** We scraped 19,358 most popular rock, pop, folk and country songs from 1960 to date, 
 from [Ultimate Guitar](https://www.ultimate-guitar.com), by querying the top 1000 "hits" for each genre and decade combination. 
 The scraper is based on [Ljfernando's Progressions repo](https://github.com/Ljfernando/Progressions), 
-and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord). 
+and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord).  
 Different from most analyses, we do not normalize the data by transposition as we want to allow users to play songs in 
 their original form (Pink Floyd's "In the Flesh?" starts with an A!), we do not want to a degenerate songs with key shifts, 
-and we do not want to require the user to do transpositions. 
-However, in our optimization we were indifferent to the chord voicing - the octave choices for each note in the chord,
+and we do not want to require the user to do transpositions. However, in our optimization we were indifferent to the chord voicing - the octave choices for each note in the chord,
 including chord inversions - change of the root note.
 
 **Results:** Our optimization suggeted sacrificing the top string and tuning the 3 bottom ones to C-G-A. 
 Considering the use of up to two fingers, our tuning allows playing 23.3% of songs having up to 4-note chords and 42.4% of songs having up to 3-note chords, 
 as compared to 0.8% and 1.4% respectively for the standard G-C-E-A tuning. 
 Note that one could potentially further simplify 4-note chords to incomplete versions with 3 notes, which we did not do here. 
-We do pay an additional price of needing to utilize frets number 2 to 7 to play these chords, and some other 3-note chords would require even higher frets.
+We do pay an additional price of needing to utilize frets number 2 to 7 to play these chords, and some other 3-note chords would require even higher frets.  
+The solution has some degrees of freedom concerning the string order and choice of octaves. However, other considerations such as proper string tension without changing strings, suggested that we fix the tuning to C4-G4-A4, 
+which is close to the bottom three of the standard G4-C4-E4-A4. Following are the chord charts for 20 popular chords requiring up to two fingers and a reach difference of up to two frets.
 
-Following are the chord charts for 20 popular chords requiring up to two fingers and a reach difference of up to two frets.
 We hope this system may help children, perplexed beginners, people with disabilities and the dexterity-challenged to play strings.
 
 <br/>
