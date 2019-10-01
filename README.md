@@ -79,7 +79,7 @@ Some statistics (no transpositions, respect chord voicings, no limit on number o
 ![Chord prevalence by songs](assets/chord_prevalence_by_songs.svg)
 ![Chord prevalence by chord instance](assets/chord_prevalence_by_chord_instance.svg)
 ![Next chord prevalence by instance](assets/next_chord_prevalence_by_instance.svg)
-![Distinct chords by songs](assets/distinct_chords_by_songs.svg)
+![Number of distinct chords by songs](assets/number_of_distinct_chords_by_songs.svg)
 ![Chord set prevalence by songs](assets/chord_set_prevalence_by_songs.svg)
 ![k-length chord sets for maximum songs](assets/k-length_chord_sets_for_maximum_songs.svg)
 
