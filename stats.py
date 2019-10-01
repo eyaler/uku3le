@@ -119,11 +119,11 @@ plot(os.path.join('assets','Chord prevalence by chord instance'), sorted_instanc
 
 max_needed = Counter(len(a) for a in folded_per_song)
 print(max_needed)
-plot(os.path.join('assets','Number of distinct chords by songs'), sorted([(num_chords,cnt/len(folded_per_song)) for num_chords,cnt in max_needed.items()], key=lambda x:(-x[1],x[0]))[:14], 'violet', 13)
+plot(os.path.join('assets','Number of distinct chords by songs'), sorted([(num_chords,cnt/len(folded_per_song)) for num_chords,cnt in max_needed.items()], key=lambda x:(-x[1],x[0]))[:14], 'violet', font_size=13, total=True)
 
 chord_sets = sorted([(' '.join(chords),cnt/len(folded_per_song)) for chords,cnt in Counter(tuple(sorted(chords, key=lambda x:(x[0] in ('A','B'), x[0], x[-1]!='b', x[-1]=='#', x[-1]=='m', x))) for chords in folded_per_song).items() if cnt>80], key=lambda x:(-x[1],x[1]))
 print(chord_sets)
-plot(os.path.join('assets','Chord set prevalence by songs'), chord_sets[:14], 'tan', 13)
+plot(os.path.join('assets','Chord set prevalence by songs'), chord_sets[:14], 'tan', font_size=13)
 
 print(sorted([(chords,cnt) for chords,cnt in Counter(tuple(sorted(chords)) for chords in folded_per_song if 3<=len(chords)<=6).items() if cnt>10], key=lambda x:(-x[1],x[1])))
 
