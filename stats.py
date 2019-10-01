@@ -5,7 +5,12 @@ from itertools import chain, combinations
 import matplotlib.pyplot as plt
 import os
 
-def plot(name, data, colors=None, font_size=14):
+limit_notes = None
+fold_voicing = False
+top = 20
+max_len = 15
+
+def plot(name, data, colors=None, font_size=14, total=False):
     objects, values = zip(*data)
     fig, ax = plt.subplots()
     ax.invert_yaxis()
@@ -18,15 +23,24 @@ def plot(name, data, colors=None, font_size=14):
     except:
         is_pct = False
     r = fig.canvas.get_renderer()
+    max_text = 0
+    for rect, object, value in zip(rects, objects, values):
+        text = ax.text(offset, rect.get_y() + rect.get_height() *0.55, object, ha='left', va='center', size=font_size)
+        width = rect.get_width()
+        text_width = ax.get_xlim()[1]*text.get_window_extent(r).width/ax.get_window_extent(r).width+offset*1.5
+        if text_width>max(width,max_text):
+            max_text = text_width
+    y = 0
     for rect, object, value in zip(rects, objects, values):
         width = rect.get_width()
-        text = ax.text(offset, rect.get_y() + rect.get_height() *0.55, object, ha='left', va='center', size=font_size)
-        ax.text(max(width,ax.get_xlim()[1]*text.get_window_extent(r).width/ax.get_window_extent(r).width+offset) + offset, rect.get_y() + rect.get_height() *0.55, '%.1f%%'%(value*100) if is_pct else value, ha='left', va='center', size=font_size)
-    fig.suptitle(os.path.basename(name).capitalize().replace('_',' '), x=0.55, size=20)
-    fig.savefig(name+'.svg')
-
-limit = None
-fold_voicing = False
+        prev_y = y
+        y = rect.get_y() + rect.get_height() *0.55
+        ax.text(max(width,max_text) + offset*1.5, y, '%.1f%%'%(value*100) if is_pct else value, ha='left', va='center', size=font_size)
+    fig.suptitle(os.path.basename(name), x=0.55, size=20)
+    if total:
+        total = sum(values)
+        ax.text(offset, y + (y-prev_y)*1.5, 'Total:  ' + ('%.1f%%'%(total*100) if is_pct else str(total)), ha='left', va='center', size=11)
+    fig.savefig(name.lower().replace(' ','_')+'.svg')
 
 #note: added the following to QUALITY_DICT in pychord\constants\qualities.py
 # ('add2', (0, 2, 4, 7)),
@@ -79,12 +93,13 @@ for chord, cnt in sorted(count_instances.items(), key=lambda x:(-x[1],x[0])):
 print(sorted(bad_chords.items(), key=lambda x: (-x[1],x[0])))
 folded_per_song = [set(fold_chords[chord] if chord in fold_chords else chord for chord in chords) for chords in chords_per_song if all(chord not in bad_chords for chord in chords)]
 folded_instances_per_song = [[fold_chords[chord] if chord in fold_chords else chord for chord in instances] for instances in instances_per_song if all(chord not in bad_chords for chord in set(instances))]
-print('base chords=%d, folded chords=%d, bad chords=%d, bad songs=%d/%d (%.1f%%)'%(len(base_chords_to_comps),len(fold_chords),len(bad_chords),len(chords_per_song)-len(folded_per_song),len(chords_per_song),(len(chords_per_song)-len(folded_per_song))/len(chords_per_song)*100))
+print('base chords=%d, folded chords=%d, bad chords=%d, bad songs=%d/%d (%.1f%%) good_songs=%d'%(len(base_chords_to_comps),len(fold_chords),len(bad_chords),len(chords_per_song)-len(folded_per_song),len(chords_per_song),(len(chords_per_song)-len(folded_per_song))/len(chords_per_song)*100, len(folded_per_song)))
+print('duplicate songs by instances: %d'%(len(folded_instances_per_song)-len(set(tuple(song) for song in folded_instances_per_song))))
 
-if limit:
-    folded_per_song = [chords for chords in folded_per_song if all(len(base_chords_to_comps[chord])<=limit for chord in chords)]
-    folded_instances_per_song = [instances for instances in folded_instances_per_song if all(len(base_chords_to_comps[chord]) <= limit for chord in set(instances))]
-    print('limit=%d: %d'%(limit, len(folded_per_song)))
+if limit_notes:
+    folded_per_song = [chords for chords in folded_per_song if all(len(base_chords_to_comps[chord])<=limit_notes for chord in chords)]
+    folded_instances_per_song = [instances for instances in folded_instances_per_song if all(len(base_chords_to_comps[chord]) <= limit_notes for chord in set(instances))]
+    print('limit_notes=%d: %d'%(limit_notes, len(folded_per_song)))
 
 count_chords = Counter(chord for chords in folded_per_song for chord in chords)
 print(count_chords)
@@ -92,22 +107,23 @@ all_colors = plt.get_cmap('tab20').colors
 sorted_chords = sorted([(chord,cnt/len(folded_per_song)) for chord,cnt in count_chords.items()], key=lambda x:(-x[1],x[0]))
 color_dict = {chord[0]: color for chord,color in zip(sorted_chords,all_colors)}
 sorted_chords = sorted_chords[:13]
-plot(os.path.join('assets','chord_prevalence_by_songs'), sorted_chords, [color_dict[chord[0]] for chord in sorted_chords])
+os.makedirs('assets', exist_ok=True)
+plot(os.path.join('assets','Chord prevalence by songs'), sorted_chords, [color_dict[chord[0]] for chord in sorted_chords])
 
 instances = [chord for chords in folded_instances_per_song for chord in chords]
 count_folded_instances = Counter(instances)
 print(count_instances)
 print(len(instances))
 sorted_instances = sorted([(chord,cnt/len(instances)) for chord,cnt in count_instances.items()], key=lambda x:(-x[1],x[0]))[:13]
-plot(os.path.join('assets','chord_prevalence_by_chord_instance'), sorted_instances, [color_dict[chord[0]] for chord in sorted_instances])
+plot(os.path.join('assets','Chord prevalence by chord instance'), sorted_instances, [color_dict[chord[0]] for chord in sorted_instances], total=True)
 
 max_needed = Counter(len(a) for a in folded_per_song)
 print(max_needed)
-plot(os.path.join('assets','distinct_chords_by_songs'), sorted([(num_chords,cnt/len(folded_per_song)) for num_chords,cnt in max_needed.items()], key=lambda x:(-x[1],x[0]))[:14], 'violet', 13)
+plot(os.path.join('assets','Distinct chords by songs'), sorted([(num_chords,cnt/len(folded_per_song)) for num_chords,cnt in max_needed.items()], key=lambda x:(-x[1],x[0]))[:14], 'violet', 13)
 
-chord_sets = sorted([(' '.join(chords),cnt/len(folded_per_song)) for chords,cnt in Counter(tuple(sorted(chords, key=lambda x:(x[0] in ('A','B'), x[0], x[-1]!='b'))) for chords in folded_per_song).items() if cnt>80], key=lambda x:(-x[1],x[1]))
+chord_sets = sorted([(' '.join(chords),cnt/len(folded_per_song)) for chords,cnt in Counter(tuple(sorted(chords, key=lambda x:(x[0] in ('A','B'), x[0], x[-1]!='b', x[-1]=='#', x[-1]=='m', x))) for chords in folded_per_song).items() if cnt>80], key=lambda x:(-x[1],x[1]))
 print(chord_sets)
-plot(os.path.join('assets','chord_set_prevalence_by_songs'), chord_sets[:14], 'violet', 13)
+plot(os.path.join('assets','Chord set prevalence by songs'), chord_sets[:14], 'tan', 13)
 
 print(sorted([(chords,cnt) for chords,cnt in Counter(tuple(sorted(chords)) for chords in folded_per_song if 3<=len(chords)<=6).items() if cnt>10], key=lambda x:(-x[1],x[1])))
 
@@ -161,30 +177,32 @@ def powerset(iterable, max_len=None):
         max_len = len(s)
     return chain.from_iterable(combinations(s, r) for r in range(1,max_len+1))
 
-top = 20
-max_len = 13
 top_chords = [chord[0] for chord in sorted(count_chords.items(), key=lambda x: -x[1])][:top]
 print(top_chords)
 
 chord_to_next = {}
-for instances in folded_instances_per_song:
-    for chord,next_chord in zip(instances[:-1],instances[1:]):
+for song in folded_instances_per_song:
+    for chord,next_chord in zip(song[:-1],song[1:]):
         if next_chord==chord:
             continue
         if chord not in chord_to_next:
             chord_to_next[chord] = Counter()
         chord_to_next[chord][next_chord] += 1
-progressions = sorted([(chord, sorted(chord_to_next[chord].items(), key=lambda x:-x[1])[0]) for chord in chord_to_next], key=lambda x: (-x[1][1], x[0], x[1][0]))
+progressions1 = sorted([(chord, sorted(next_chords.items(), key=lambda x:-x[1])[0]) for chord, next_chords in chord_to_next.items()], key=lambda x: (-x[1][1], x[0], x[1][0]))[:30]
+print(progressions1)
+progressions = sorted([(chord + '  →  ' + next_chord[0], next_chord[1]/(len(instances)-len(folded_per_song))) for chord, next_chords in chord_to_next.items() for next_chord in next_chords.items()], key=lambda x: (-x[1], x[0]))[:60]
 print(progressions)
+plot(os.path.join('assets','Next chord prevalence by instance'), progressions[:18], [color_dict[chord[0].split(' ')[0]] for chord in progressions[:18]], total=True, font_size=11)
 
-
+results = []
 for i in range(1,min(max_len,len(top_chords))+1):
     subs = powerset(top_chords,i)
     best_sub = []
     best_count = 0
     for sub in subs:
-        sub = sorted(sub)
+        sub = sorted(sub, key=lambda x:(x[0] in ('A','B'), x[0], x[-1]!='b', x[-1]=='#', x[-1]=='m', x))
         sub_set = set(sub)
+        sub = ' '.join(sub)
         count_have = sum(chords <= sub_set for chords in folded_per_song)
         if count_have>best_count:
             best_count = count_have
@@ -192,4 +210,9 @@ for i in range(1,min(max_len,len(top_chords))+1):
         elif count_have==best_count:
             best_sub.append(sub)
     if best_count>0:
-        print('%d %d %.1f%%'%(i, best_count, best_count / len(folded_per_song) * 100), best_sub)
+        print('%d %d %.1f%%'%(i, best_count, best_count / len(folded_per_song) * 100), sorted(best_sub))
+        results.append(('%d:  %s'%(i, sorted(best_sub)[0]), best_count / len(folded_per_song)))
+
+    if 5<i<14:
+        plot(os.path.join('assets','k-length chord sets for maximum songs'), results[2:13][::-1], 'pink')
+print('done')

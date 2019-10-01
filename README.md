@@ -18,7 +18,7 @@ Which makes sense for the latter as this is just the combination of the chords o
 I-V-vi-IV progression for the [most popular](http://www.hooktheory.com/blog/i-analyzed-the-chords-of-1300-popular-songs-for-patterns-this-is-what-i-found) C major (C-G-Am-F) and G major (G-D-Em-C) scales.
 By the way, for 7 chords the three groups converge to the union of the above.
 
-We use data of 20,000 most popular rock, pop, folk and country songs from 1960 to date, 
+We use data of 19,358 most popular rock, pop, folk and country songs from 1960 to date, 
 scraped from [Ultimate Guitar](https://www.ultimate-guitar.com). 
 The scraper is based on [Ljfernando's Progressions repo](https://github.com/Ljfernando/Progressions), 
 and the analysis is made possible by [pychord](https://github.com/yuma-m/pychord). 
@@ -72,13 +72,15 @@ Here are the most important missing chords requiring 3 fingers:
 ![B](assets/26_B.svg)
 ![Bm](assets/27_Bm.svg)
 
-Charts by [Chordious](https://chordious.com).
+Chord charts by [Chordious](https://chordious.com).
 
-Some statistics:
+Some statistics (no transpositions, respect chord voicings, no limit on number of notes in chord):
 
 ![Chord prevalence by songs](assets/chord_prevalence_by_songs.svg)
 ![Chord prevalence by chord instance](assets/chord_prevalence_by_chord_instance.svg)
+![Next chord prevalence by instance](assets/next_chord_prevalence_by_instance.svg)
 ![Distinct chords by songs](assets/distinct_chords_by_songs.svg)
 ![Chord set prevalence by songs](assets/chord_set_prevalence_by_songs.svg)
+![k-length chord sets for maximum songs](assets/k-length_chord_sets_for_maximum_songs.svg)
 
 A [Geekcon+2019](https://geekcon.org/geekcon-plus-2019) project.
