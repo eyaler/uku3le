@@ -76,9 +76,9 @@ Charts by [Chordious](https://chordious.com).
 
 Some statistics:
 
-![Chord Prevalence by songs](assets/Chord Prevalence by songs.svg)
-![Chord Prevalence by instance](assets/Chord Prevalence by instance.svg)
-![Distinct chords by songs](assets/Distinct chords by songs.svg)
-![Chord set prevalence by songs](assets/Chord set prevalence by songs.svg)
+![Chord prevalence by songs](assets/chord_prevalence_by_songs.svg)
+![Chord prevalence by instance](assets/chord_prevalence_by_instance.svg)
+![Distinct chords by songs](assets/distinct_chords_by_songs.svg)
+![Chord set prevalence by songs](assets/chord_set_prevalence_by_songs.svg)
 
 A [Geekcon+2019](https://geekcon.org/geekcon-plus-2019) project.
