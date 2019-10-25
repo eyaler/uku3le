@@ -50,7 +50,7 @@ as compared to 0.3% and 0.4% respectively for the standard G-C-E-A tuning.
 The above assumes we forgo the 4-note chords. However, we could instead simplify them to incomplete versions with 3 notes. 
 We will do so by dropping the "fifth" interval, which is the third note of the chord. We denote these simplified chords with an asterisk (\*). 
 An open strum gives Am7* similar to the standard tuning. This brings us up to 28% of songs having up to 4-note chords. Booyah!  
-We do pay an additional price of needing to utilize the 7 first frets to play these chords, and some other 3-note chords would require even higher frets.  
+We do pay an additional price of needing to utilize the 7 first frets to play these chords, and some chords we did not take into account would require even higher frets. 
 The solution has some degrees of freedom concerning the string order and choice of octaves. However, other considerations such as proper string tension without changing strings, suggested that we fix the tuning to C4-G4-A4, 
 which is close to the bottom three of the standard G4-C4-E4-A4. Following are the chord charts for 28 popular chords requiring up to two fingers and a reach difference of up to two frets.
 
@@ -88,9 +88,9 @@ We hope this system may help children, beginners with difficulties, people with 
 ![Asus2](assets/25_Asus2.svg)
 ![A5](assets/26_A5.svg)
 ![A7*](assets/27_A7.svg)
-![A7*](assets/28_A7(1).svg)
+![A7*(1)](assets/28_A7(1).svg)
 ![Am7*](assets/29_Am7.svg)
-![Am7*](assets/30_Am7(1).svg)
+![Am7*(1)](assets/30_Am7(1).svg)
 ![A7sus4*](assets/31_A7sus4.svg)
 ![A7sus4*(1)](assets/32_A7sus4(1).svg)
 ![B7*](assets/33_B7.svg)
