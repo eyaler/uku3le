@@ -6,15 +6,23 @@ import matplotlib.pyplot as plt
 import os
 from time import time
 
-skip_plot = True
+skip_plot = False
 limit_notes = None
 fold_voicing = False
 top = 19
 max_len = 18
+base_plot_len = 13
 
-def plot(name, data, colors=None, font_size=14, total=False):
+def plot(name, data, colors=None, font_size=None, total=False):
     if limit_notes or fold_voicing or skip_plot:
         return
+    if font_size is None:
+        if len(data)>=16:
+            font_size = 11
+        elif len(data) >= 14:
+            font_size = 13
+        else:
+            font_size = 14
     objects, values = zip(*data)
     fig, ax = plt.subplots()
     ax.invert_yaxis()
@@ -40,7 +48,7 @@ def plot(name, data, colors=None, font_size=14, total=False):
         prev_y = y
         y = rect.get_y() + rect.get_height() *0.55
         ax.text(max(width,max_text) + offset*1.5, y, '%.1f%%'%(value*100) if is_pct else value, ha='left', va='center', size=font_size)
-    fig.suptitle(os.path.basename(name), x=0.55, size=20)
+    fig.suptitle(os.path.basename(name.split('_')[0]), x=0.55, size=20)
     if total:
         total = sum(values)
         ax.text(offset, y + (y-prev_y)*1.5, 'Total:  ' + ('%.1f%%'%(total*100) if is_pct else str(total)), ha='left', va='center', size=11)
@@ -126,7 +134,7 @@ print(count_chords)
 all_colors = plt.get_cmap('tab20').colors
 sorted_chords = sorted([(chord,cnt/len(folded_per_song)) for chord,cnt in count_chords.items()], key=lambda x:(-x[1],x[0]))
 color_dict = {chord[0]: color for chord,color in zip(sorted_chords,all_colors)}
-sorted_chords = sorted_chords[:13]
+sorted_chords = sorted_chords[:base_plot_len]
 os.makedirs('assets', exist_ok=True)
 plot(os.path.join('assets','Chord prevalence by songs'), sorted_chords, [color_dict[chord[0]] for chord in sorted_chords])
 
@@ -134,16 +142,16 @@ instances = [chord for chords in folded_instances_per_song for chord in chords]
 count_folded_instances = Counter(instances)
 print(count_instances)
 print(len(instances))
-sorted_instances = sorted([(chord,cnt/len(instances)) for chord,cnt in count_instances.items()], key=lambda x:(-x[1],x[0]))[:13]
+sorted_instances = sorted([(chord,cnt/len(instances)) for chord,cnt in count_instances.items()], key=lambda x:(-x[1],x[0]))[:base_plot_len]
 plot(os.path.join('assets','Chord prevalence by chord instance'), sorted_instances, [color_dict[chord[0]] for chord in sorted_instances], total=True)
 
 max_needed = Counter(len(a) for a in folded_per_song)
 print(max_needed)
-plot(os.path.join('assets','Number of distinct chords by songs'), sorted([(num_chords,cnt/len(folded_per_song)) for num_chords,cnt in max_needed.items()], key=lambda x:(-x[1],x[0]))[:14], 'violet', font_size=13, total=True)
+plot(os.path.join('assets','Number of distinct chords by songs'), sorted([(num_chords,cnt/len(folded_per_song)) for num_chords,cnt in max_needed.items()], key=lambda x:(-x[1],x[0]))[:14], 'violet', total=True)
 
 chord_sets = sorted([(' '.join(chords),cnt/len(folded_per_song)) for chords,cnt in Counter(tuple(sorted(chords, key=lambda x:(x[0] in ('A','B'), x[0], x[-1]!='b', x[-1]=='#', x[-1]=='m', x))) for chords in folded_per_song).items() if cnt>80], key=lambda x:(-x[1],x[1]))
 print(chord_sets)
-plot(os.path.join('assets','Chord set prevalence by songs'), chord_sets[:14], 'tan', font_size=13)
+plot(os.path.join('assets','Chord set prevalence by songs'), chord_sets[:14], 'tan')
 
 print(sorted([(chords,cnt) for chords,cnt in Counter(tuple(sorted(chords)) for chords in folded_per_song if 3<=len(chords)<=6).items() if cnt>10], key=lambda x:(-x[1],x[1])))
 
@@ -221,7 +229,7 @@ transitions1 = sorted([(chord, sorted(next_chords.items(), key=lambda x:-x[1])[0
 print(transitions1)
 transitions = sorted([(chord + '  →  ' + next_chord[0], next_chord[1]/(len(instances)-len(folded_per_song))) for chord, next_chords in chord_to_next.items() for next_chord in next_chords.items()], key=lambda x: (-x[1], x[0]))[:60]
 print(transitions)
-plot(os.path.join('assets','Chord transition prevalence by instance'), transitions[:18], [color_dict[chord[0].split(' ')[0]] for chord in transitions[:18]], total=True, font_size=11)
+plot(os.path.join('assets','Chord transition prevalence by instance'), transitions[:18], [color_dict[chord[0].split(' ')[0]] for chord in transitions[:18]], total=True)
 
 if fold_voicing==True:
     count_dupes = 0
@@ -240,6 +248,8 @@ top_folded_per_song = [chords for chords in folded_per_song if chords <= top_set
 print(len(folded_per_song), len(top_folded_per_song), '%.1f%%'%(len(top_folded_per_song)/len(folded_per_song)))
 
 results = []
+colors = []
+prev_sub = []
 grand_start = time()
 for i in range(1,min(max_len,len(top_chords))+1):
     start = time()
@@ -255,11 +265,18 @@ for i in range(1,min(max_len,len(top_chords))+1):
         elif count_have==best_count:
             best_sub.append(sub)
     if best_count>0:
+        diff_chords = sorted(set(best_sub[0]) - set(prev_sub), key=lambda x:(x[0] in ('A','B'), x[0], x[-1]!='b', x[-1]=='#', x[-1]=='m', x))
+        color = 'pink'
+        assert color not in color_dict.values()
+        if diff_chords and diff_chords[0] in color_dict:
+            color = color_dict[diff_chords[0]]
+        colors.append(color)
+        prev_sub = best_sub[0]
         best_sub = sorted([' '.join(sorted(sub, key=lambda x: (x[0] in ('A', 'B'), x[0], x[-1] != 'b', x[-1] == '#', x[-1] == 'm', x))) for sub in best_sub])
-        print('%d %d %.1f%%'%(i, best_count, best_count / len(folded_per_song) * 100), best_sub, '(%.1f min)'%((time()-start)/60))
         results.append(('%d:  %s'%(i, best_sub[0]), best_count / len(folded_per_song)))
+        print('%d %d %.1f%%'%(i, best_count, best_count / len(folded_per_song) * 100), best_sub, diff_chords, '(%.1f min)'%((time()-start)/60))
 
-    if i>=13:
-        plot(os.path.join('assets','k-length chord sets for maximum songs'+('_'+str(i) if i>13 else '')), results[2:i][::-1], 'pink')
+    if i>=base_plot_len:
+        plot(os.path.join('assets','k-length chord sets for maximum songs' + (('_'+str(i)) if i>base_plot_len else '')), results[2:i][::-1], colors[2:i][::-1])
 print('(%.1f min)'%((time()-grand_start)/60))
 print('done')
